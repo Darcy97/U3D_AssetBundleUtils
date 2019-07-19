@@ -5,15 +5,25 @@ namespace Libs
     public class Log
     {
 
-        public static void Print (string message)
+        public static void Print (string message, string details = "")
         {
-            if (GameConstants.IsDebugLog)
-                Debug.Log(message);
+            if (GameConstants.IS_DEBUG_LOG)
+            {
+                if (details != "")
+                    Debug.Log (">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + message + " >> " + details);
+                else
+                    Debug.Log (">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + message);
+            }
         }
 
-        public static void Error(string error){
-            if(GameConstants.IsDebugLog){
-                Debug.Log(error);
+        public static void Error (string message, string details = "")
+        {
+            if (GameConstants.IS_DEBUG_LOG)
+            {
+                if (details != "")
+                    Debug.LogError (">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + message + " >> " + details);
+                else
+                    Debug.LogError (">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + message);
             }
         }
     }

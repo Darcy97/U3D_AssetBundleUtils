@@ -3,7 +3,7 @@
  * @version: 0.0.1
  * @Author: Darcy
  * @Date: 2019-07-19 17:16:45
- * @LastEditTime: 2019-07-19 17:54:10
+ * @LastEditTime: 2019-07-19 20:23:19
  */
 using System;
 using System.Reflection;
@@ -12,14 +12,16 @@ using UnityEngine;
 namespace Libs
 {
     /// <summary>
-	/// Singleton.
-	/// <description>
-	/// 此代码引用位置
-	/// https://www.codeproject.com/Articles/14026/Generic-Singleton-Pattern-using-Reflection-in-C
-	/// http://www.cnblogs.com/zhili/p/SingletonPatterm.html
-	/// 所有单例在初始化时，都需要对数据成员进行重置处理,因为可能单例的配置数据会进行重置更新处理
-	/// </description>
-	/// </summary>
+    /// Singleton.
+    /// <description>
+    /// 此代码引用位置
+    /// https://www.codeproject.com/Articles/14026/Generic-Singleton-Pattern-using-Reflection-in-C
+    /// http://www.cnblogs.com/zhili/p/SingletonPatterm.html
+    ///       
+    /// 所有单例在初始化时，都需要对数据成员进行重置处理,因为可能单例的配置数据会进行重置更新处理
+    /// !使用Singleton生成单例时一定注意使用的类包含私有无参构造方法
+    /// </description>
+    /// </summary>
     /// <typeparam name="T"></typeparam>
     public static class Singleton<T> where T : class
     {
@@ -60,8 +62,8 @@ namespace Libs
                             {
                                 Log.Error ("GetConstructor", exception.Message);
                             }
-                            // Also exclude internal constructors.
 
+                            // !Also exclude internal constructors.
                             if (constructorInfo == null || constructorInfo.IsAssembly)
                                 Log.Error ("A private or protected constructor is missing", typeof (T).Name);
 

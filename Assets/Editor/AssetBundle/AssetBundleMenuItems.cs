@@ -3,7 +3,7 @@
  * @version: 0.0.0
  * @Author: Darcy
  * @Date: 2019-07-18 11:36:09
- * @LastEditTime: 2019-07-18 15:11:51
+ * @LastEditTime: 2019-07-19 19:55:48
  */
 
 using UnityEngine.UI;
@@ -21,8 +21,12 @@ namespace AssetBundleLibs
         static public void BuildAssetBundles ()
         {
 
-            Log.Print("test");
             BundleBuildScript.BuildAssetBundlesAll ();
+        }
+
+        [MenuItem ("Libs/AssetBundles/Delete All AssetBundles")]
+        static public void DeleteAllBundleFiles(){
+            BundleBuildScript.DeleteAllFile();
         }
     }
 }

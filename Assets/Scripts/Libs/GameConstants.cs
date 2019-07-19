@@ -3,7 +3,7 @@
  * @version: 0.0.1
  * @Author: Darcy
  * @Date: 2019-07-18 14:21:42
- * @LastEditTime: 2019-07-18 14:49:29
+ * @LastEditTime: 2019-07-19 14:35:07
  */
 using System;
 namespace Libs
@@ -12,6 +12,8 @@ namespace Libs
     {
 
         public const Boolean IsDebugLog = true;
+
+        public const string Version = "0.0.1";
 
     }
 }

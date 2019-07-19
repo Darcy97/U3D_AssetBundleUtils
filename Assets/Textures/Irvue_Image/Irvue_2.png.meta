@@ -75,7 +75,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 3e007f18883164d48b819851e0dbfdf5
+    spriteID: 330bb92314a46448386410b23db8eb2d
     vertices: []
     indices: 
     edges: []
@@ -84,5 +84,5 @@ TextureImporter:
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
   userData: 
-  assetBundleName: irvueimage
+  assetBundleName: 
   assetBundleVariant: 

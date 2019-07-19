@@ -6,7 +6,7 @@ using System.IO;
  * @version: 0.0.1
  * @Author: Darcy
  * @Date: 2019-07-19 14:38:57
- * @LastEditTime: 2019-07-19 21:05:49
+ * @LastEditTime: 2019-07-19 21:38:32
  */
 using UnityEngine;
 
@@ -43,11 +43,7 @@ namespace Libs
             string path = Path.Combine (AssetPathManager.GetAssetBundleOutPutPath (), bundleName);
             if (File.Exists (path))
             {
-                if (bundles.ContainsKey (bundleName) && bundles[bundleName] == null)
-                {
-                    bundles[bundleName] = AssetBundle.LoadFromFile (path);
-                }
-                else if (!bundles.ContainsKey (bundleName))
+                if (!IsBundleExist (bundleName))
                     bundles.Add (bundleName, AssetBundle.LoadFromFile (path));
                 return true;
             }
@@ -68,13 +64,16 @@ namespace Libs
         public void UnLoadBundle (string bundleName, bool unLoadAllLoadedObjs = false)
         {
             if (bundles.ContainsKey (bundleName) && bundles[bundleName] != null)
+            {
                 bundles[bundleName].Unload (unLoadAllLoadedObjs); //* */这里传入true则bundle内资源创建的实例也会被destroy掉，比如加载了一个图片在一个场景内，这时候卸载bundle并传入true  这个图片也会消失
+                bundles.Remove (bundleName);
+            }
         }
 
-        public Sprite LoadSpriteFromBundle (string spriteName, string bundleName)
+        public T LoadResourceFromBundle<T> (string resourceName, string bundleName) where T : UnityEngine.Object
         {
             AssetBundle bundle;
-            if (bundles.ContainsKey (bundleName) && bundles[bundleName] != null)
+            if (IsBundleExist (bundleName))
                 bundle = bundles[bundleName];
             else
             {
@@ -82,14 +81,19 @@ namespace Libs
                 return null;
             }
 
-            var result = bundle.LoadAsset<Sprite> (spriteName);
+            var result = bundle.LoadAsset<T> (resourceName);
             if (result == null)
             {
-                Log.Error ("Sprite is not exist >> ", spriteName);
+                Log.Error ("Resource is not exist", resourceName);
                 return null;
             }
 
             return result;
+        }
+
+        private bool IsBundleExist (string name)
+        {
+            return (bundles.ContainsKey (name) && bundles[name] != null);
         }
 
     }

@@ -31,7 +31,7 @@ public class LoadImage : MonoBehaviour
     {
         if (AssetBundleManager.Instance.CheckLoadBundle (_bundleName))
         {
-            _image.sprite = AssetBundleManager.Instance.LoadSpriteFromBundle (_imgNames[img_index], _bundleName);
+            _image.sprite = AssetBundleManager.Instance.LoadResourceFromBundle<Sprite> (_imgNames[img_index], _bundleName);
             _image.preserveAspect = true;
         }
     }

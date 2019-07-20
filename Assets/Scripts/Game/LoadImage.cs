@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AssetBundleLibs;
 using Libs;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,21 +30,11 @@ public class LoadImage : MonoBehaviour
 
     private void Start ()
     {
-        if (AssetBundleManager.Instance.CheckLoadBundle (_bundleName))
-        {
-            _image.sprite = AssetBundleManager.Instance.LoadResourceFromBundle<Sprite> (_imgNames[img_index], _bundleName);
-            _image.preserveAspect = true;
-        }
-    }
+        // AssetBundleManager.Instance.CheckDownloadBundleFromRemoteServer(_bundleName);
 
-    private void OnDestroy ()
-    {
-        UnLoadBundle ();
-    }
+        _image.sprite = AssetBundleManager.Instance.LoadResourceFromBundle<Sprite> (_imgNames[img_index], _bundleName);
+        _image.preserveAspect = true;
 
-    public void UnLoadBundle (bool unLoadAllLoadedObjs = false)
-    {
-        AssetBundleManager.Instance.UnLoadBundle (_bundleName, unLoadAllLoadedObjs);
     }
 
 }

@@ -4,7 +4,7 @@ using System.Net;
  * @version: 0.0.1
  * @Author: Darcy
  * @Date: 2019-07-19 14:38:57
- * @LastEditTime: 2019-07-20 17:23:55
+ * @LastEditTime: 2019-07-20 17:52:05
  */
 using System;
 using System.Collections;
@@ -33,6 +33,8 @@ namespace AssetBundleLibs
 
         private Dictionary<String, AssetBundle> bundleCaches = new Dictionary<String, AssetBundle> ();
         private Dictionary<String, UnityWebRequest> bundleRequests = new Dictionary<string, UnityWebRequest> ();
+        private Dictionary<String, AssetBundleCreateRequest> bundleCreateRequests = new Dictionary<string, AssetBundleCreateRequest> ();
+
         private string _bundlDownloadUrl;
 
         #region Public Func
@@ -47,13 +49,13 @@ namespace AssetBundleLibs
         /// </summary>
         /// <param name="bundleName"></param>
         /// <returns></returns>
-        public bool CheckLoadBundleFromLocalFile (string bundleName)
+        public IEnumerator CheckLoadBundleFromLocalFile (string bundleName)
         {
 
             if (string.IsNullOrEmpty (bundleName))
             {
                 Log.Error ("Bundle name error", bundleName);
-                return false;
+                yield break;
             }
 
             if (!IsBundleExistInCache (bundleName))
@@ -62,7 +64,7 @@ namespace AssetBundleLibs
                 string path = Path.Combine (AssetPathManager.GetAssetBundleOutPutPath (), bundleName);
                 if (File.Exists (path))
                 {
-                    var bunde = AssetBundle.LoadFromFile (path);
+                    var bunde = AssetBundle.LoadFromFileAsync (path);
                     if (bunde != null)
                     {
                         AddBundleCache (bunde);

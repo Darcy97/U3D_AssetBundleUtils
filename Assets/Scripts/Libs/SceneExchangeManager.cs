@@ -1,16 +1,19 @@
+using System.Net.Mime;
 /*
  * @Descripttion: 
  * @version: 0.0.0
  * @Author: Darcy
  * @Date: 2019-07-20 14:18:45
- * @LastEditTime: 2019-07-20 17:12:09
+ * @LastEditTime: 2019-07-20 17:49:08
  */
-using System;
+using System.Collections;
 using AssetBundleLibs;
 using Libs;
+using UnityEngine;
+using UnityEngine.UI;
 namespace Libs
 {
-    public class SceneExchangeManager
+    public class SceneExchangeManager : MonoBehaviour
     {
 
         #region Instance    
@@ -23,6 +26,8 @@ namespace Libs
         }
         private SceneExchangeManager () { }
         #endregion
+
+        public Image BundleLoadSlider;
 
         /// <summary>
         /// 切换场景卸载加载资源 显示loadding界面等
@@ -55,12 +60,18 @@ namespace Libs
 
         private void LoadNewSceneBundle (string newScene)
         {
-            AssetBundleManager.Instance.CheckLoadBundleFromLocalFile (newScene);
+            // AssetBundleManager.Instance.CheckLoadBundleFromLocalFile (newScene);
+            StartCoroutine(LoadBundle(newScene.ToLower()));
         }
 
         private bool CheckCanLoadSceneFromLocal (string sceneName)
         {
             return AssetBundleManager.Instance.CheckBundleExistInLocalFile (sceneName.ToLower ());
+        }
+
+        private IEnumerator LoadBundle(string bundleName){
+            StartCoroutine(AssetBundleManager.Instance.CheckLoadBundleFromLocalFile(bundleName));
+            yield return 0;
         }
 
         #endregion

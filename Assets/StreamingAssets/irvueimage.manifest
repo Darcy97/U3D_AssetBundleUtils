@@ -1,0 +1,23 @@
+ManifestFileVersion: 0
+CRC: 2183746528
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: eb3abc6cc3f3baa4a18962046fd293f3
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: ea5a42e0fd8ea905efa7aa926a3b8944
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Textures/Irvue_Image/Irvue_2.png
+- Assets/Textures/Irvue_Image/Irvue_1.png
+- Assets/Textures/Irvue_Image/Irvue_5.png
+- Assets/Textures/Irvue_Image/Irvue_3.png
+- Assets/Textures/Irvue_Image/Irvue_4.png
+- Assets/Textures/Irvue_Image/Irvue_0.png
+Dependencies: []

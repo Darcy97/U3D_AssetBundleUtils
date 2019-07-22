@@ -1,10 +1,11 @@
+using System;
 using System.Net.Mime;
 /*
  * @Descripttion: 
  * @version: 0.0.0
  * @Author: Darcy
  * @Date: 2019-07-20 14:18:45
- * @LastEditTime: 2019-07-20 17:49:08
+ * @LastEditTime: 2019-07-22 16:17:08
  */
 using System.Collections;
 using AssetBundleLibs;
@@ -36,7 +37,7 @@ namespace Libs
         /// <param name="currentScene"></param>
         /// <param name="newScene"></param>
         /// <returns></returns>
-        public bool SceneExchange (string currentScene, string newScene)
+        public bool SceneExchange (string currentScene, string newScene, Action succeedCallBack = null)
         {
             if (newScene.Equals (GameConstants.MAIN_SCENE_NAME))
             {
@@ -46,7 +47,7 @@ namespace Libs
             if (!CheckCanLoadSceneFromLocal (newScene))
                 return false;
             UnloadCurrentSceneBundle (currentScene);
-            LoadNewSceneBundle (newScene);
+            LoadNewSceneBundle (newScene, succeedCallBack);
             return true;
         }
 
@@ -58,10 +59,14 @@ namespace Libs
             AssetBundleManager.Instance.UnLoadBundle (currentScene.ToLower (), true);
         }
 
-        private void LoadNewSceneBundle (string newScene)
+        private Coroutine _bundleLoadCoroutine;
+        private void LoadNewSceneBundle (string newScene, Action succeedCallBack = null)
         {
+            if(succeedCallBack == null){
+                Log.Error("null");
+            }
             // AssetBundleManager.Instance.CheckLoadBundleFromLocalFile (newScene);
-            StartCoroutine(LoadBundle(newScene.ToLower()));
+            _bundleLoadCoroutine = CoroutineUtil.Instance.StartCoroutine((LoadBundle (newScene.ToLower (), succeedCallBack)));
         }
 
         private bool CheckCanLoadSceneFromLocal (string sceneName)
@@ -69,8 +74,26 @@ namespace Libs
             return AssetBundleManager.Instance.CheckBundleExistInLocalFile (sceneName.ToLower ());
         }
 
-        private IEnumerator LoadBundle(string bundleName){
-            StartCoroutine(AssetBundleManager.Instance.CheckLoadBundleFromLocalFile(bundleName));
+        public IEnumerator LoadBundle (string bundleName, Action succeedCallBack = null)
+        {
+            CoroutineUtil.Instance.StartCoroutine (AssetBundleManager.Instance.CheckLoadBundleFromLocalFile (bundleName, succeedCallBack, ()=>{
+                if(_bundleLoadCoroutine != null)
+                StopCoroutine(_bundleLoadCoroutine);
+            }));
+
+            //TODO 如果上面协程启动 request 失败 这里会卡住
+            //TODO 拟通过获取本协程索引 通过关闭协程结束下面的逻辑
+            yield return new WaitUntil (() =>
+                AssetBundleManager.Instance.GetBundleLoadRequestByName (bundleName) != null);
+            var request = AssetBundleManager.Instance.GetBundleLoadRequestByName (bundleName);
+            //TODO request报空问题待解决
+            while (request != null && !request.isDone)
+            {
+                Log.Print (request.progress.ToString ());
+                BundleLoadSlider.fillAmount = request.progress;
+                yield return GameConstants.WaitTwoIn100Second;
+            }
+
             yield return 0;
         }
 

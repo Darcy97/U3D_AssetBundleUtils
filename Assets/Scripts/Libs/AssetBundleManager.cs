@@ -4,7 +4,7 @@ using System.Net;
  * @version: 0.0.1
  * @Author: Darcy
  * @Date: 2019-07-19 14:38:57
- * @LastEditTime: 2019-07-20 17:52:05
+ * @LastEditTime: 2019-07-22 13:44:31
  */
 using System;
 using System.Collections;
@@ -32,7 +32,7 @@ namespace AssetBundleLibs
         #endregion
 
         private Dictionary<String, AssetBundle> bundleCaches = new Dictionary<String, AssetBundle> ();
-        private Dictionary<String, UnityWebRequest> bundleRequests = new Dictionary<string, UnityWebRequest> ();
+        private Dictionary<String, UnityWebRequest> bundleWebRequests = new Dictionary<string, UnityWebRequest> ();
         private Dictionary<String, AssetBundleCreateRequest> bundleCreateRequests = new Dictionary<string, AssetBundleCreateRequest> ();
 
         private string _bundlDownloadUrl;
@@ -49,42 +49,53 @@ namespace AssetBundleLibs
         /// </summary>
         /// <param name="bundleName"></param>
         /// <returns></returns>
-        public IEnumerator CheckLoadBundleFromLocalFile (string bundleName)
+        public IEnumerator CheckLoadBundleFromLocalFile (string bundleName, Action loadSucceedCallBack = null, Action loadFailedCallBack = null)
         {
 
             if (string.IsNullOrEmpty (bundleName))
             {
                 Log.Error ("Bundle name error", bundleName);
+                loadFailedCallBack?.Invoke ();
                 yield break;
             }
 
             if (!IsBundleExistInCache (bundleName))
             {
-
                 string path = Path.Combine (AssetPathManager.GetAssetBundleOutPutPath (), bundleName);
                 if (File.Exists (path))
                 {
-                    var bunde = AssetBundle.LoadFromFileAsync (path);
-                    if (bunde != null)
+                    var _bundeCreateRequest = new AssetBundleCreateRequest ();
+                    bundleCreateRequests.Add (bundleName, _bundeCreateRequest);
+
+                    yield return _bundeCreateRequest = AssetBundle.LoadFromFileAsync (path);
+
+                    if (_bundeCreateRequest.assetBundle != null)
                     {
-                        AddBundleCache (bunde);
-                        return true;
+                        AddBundleCache (_bundeCreateRequest.assetBundle);
+                        loadSucceedCallBack?.Invoke ();
                     }
-                    return false;
+                    else
+                    {
+                        loadFailedCallBack?.Invoke ();
+                    }
+                    yield return GameConstants.WaitTwoIn10Second;
+                    //bundleCreateRequests.Remove (bundleName);
                 }
                 else
                 {
-                    Log.Error ("Bundle Path not exist", bundleName);
-                    return false;
+                    Log.Error ("Bundle not exist", bundleName);
+                    loadFailedCallBack?.Invoke ();
+                    yield break;
                 }
             }
             else
-                return true;
+            {
+                loadSucceedCallBack?.Invoke ();
+            }
         }
 
         /// <summary>
         ///  从远程下载bundle
-        /// 下载成功或已存在指定 bundle 返回 true
         /// ! 测试使用mac本地服务器 url地址配置在GameCanstants中
         /// </summary>
         /// <param name="bundleName"></param>
@@ -105,13 +116,11 @@ namespace AssetBundleLibs
             if (string.IsNullOrEmpty (downloadUrl))
                 yield break;
 
-            
-
             UnityEngine.Networking.UnityWebRequest request = UnityWebRequest.Get (downloadUrl);
             request.timeout = 600;
-            bundleRequests.Add (_bundleName, request);
+            bundleWebRequests.Add (_bundleName, request);
             yield return request.SendWebRequest ();
-            
+
             // int i = 0;
             // while(i < 1000)
             // {
@@ -119,8 +128,8 @@ namespace AssetBundleLibs
             //     i++;
             // }
 
-            if(request.isHttpError || request.isNetworkError)
-                Log.Error(request.error);
+            if (request.isHttpError || request.isNetworkError)
+                Log.Error (request.error);
 
             string localSavePath = Path.Combine (AssetPathManager.GetAssetBundleOutPutPath (), cacheItem.BundleName);
             //*删除旧版本bundle */
@@ -155,7 +164,7 @@ namespace AssetBundleLibs
                 Log.Error (e.Message);
             }
             yield return GameConstants.WaitTwoIn10Second;
-            bundleRequests.Remove (_bundleName);
+            bundleWebRequests.Remove (_bundleName);
             request.Dispose ();
             // AssetBundle bundle = DownloadHandlerAssetBundle.GetContent (request);
             // AddBundleCache (bundle);
@@ -215,10 +224,17 @@ namespace AssetBundleLibs
             return result;
         }
 
-        public UnityWebRequest GetRequestByBundleName (string name)
+        public UnityWebRequest GetBundleWebRequestByName (string name)
         {
-            if (bundleRequests.ContainsKey (name))
-                return bundleRequests[name];
+            if (bundleWebRequests.ContainsKey (name))
+                return bundleWebRequests[name];
+            return null;
+        }
+
+        public AssetBundleCreateRequest GetBundleLoadRequestByName (string name)
+        {
+            if (bundleCreateRequests.ContainsKey (name))
+                return bundleCreateRequests[name];
             return null;
         }
 

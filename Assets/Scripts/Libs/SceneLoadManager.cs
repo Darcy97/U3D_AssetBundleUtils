@@ -3,14 +3,14 @@
  * @version: 0.0.0
  * @Author: Darcy
  * @Date: 2019-07-19 15:11:41
- * @LastEditTime: 2019-07-20 14:57:53
+ * @LastEditTime: 2019-07-22 12:46:31
  */
 
 using UnityEngine;
 using UnityEngine.SceneManagement;
 namespace Libs
 {
-    public class SceneLoadManager
+    public class SceneLoadManager : MonoBehaviour
     {
 
         #region Singleton
@@ -24,16 +24,17 @@ namespace Libs
 
         private SceneLoadManager () { }
         #endregion
-        
+
         private string _currentScene;
 
         public void LoadScene (string name)
         {
-            if (SceneExchangeManager.Instance.SceneExchange (_currentScene, name))
-            {
-                _currentScene = name;
-                AsyncOperation operation = SceneManager.LoadSceneAsync (name);
-            }
+            SceneExchangeManager.Instance.SceneExchange (_currentScene, name,
+                () =>
+                {
+                    _currentScene = name;
+                    AsyncOperation operation = SceneManager.LoadSceneAsync (name);
+                });
         }
 
         public string GetCurrentSceneName ()

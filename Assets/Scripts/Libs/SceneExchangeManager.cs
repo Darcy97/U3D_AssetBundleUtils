@@ -5,7 +5,7 @@ using System.Net.Mime;
  * @version: 0.0.0
  * @Author: Darcy
  * @Date: 2019-07-20 14:18:45
- * @LastEditTime: 2019-07-22 16:17:08
+ * @LastEditTime: 2019-07-23 19:41:40
  */
 using System.Collections;
 using AssetBundleLibs;
@@ -62,11 +62,12 @@ namespace Libs
         private Coroutine _bundleLoadCoroutine;
         private void LoadNewSceneBundle (string newScene, Action succeedCallBack = null)
         {
-            if(succeedCallBack == null){
-                Log.Error("null");
+            if (succeedCallBack == null)
+            {
+                Log.Error ("null");
             }
             // AssetBundleManager.Instance.CheckLoadBundleFromLocalFile (newScene);
-            _bundleLoadCoroutine = CoroutineUtil.Instance.StartCoroutine((LoadBundle (newScene.ToLower (), succeedCallBack)));
+            _bundleLoadCoroutine = CoroutineUtil.Instance.StartCoroutine ((LoadBundle (newScene.ToLower (), succeedCallBack)));
         }
 
         private bool CheckCanLoadSceneFromLocal (string sceneName)
@@ -76,10 +77,13 @@ namespace Libs
 
         public IEnumerator LoadBundle (string bundleName, Action succeedCallBack = null)
         {
-            CoroutineUtil.Instance.StartCoroutine (AssetBundleManager.Instance.CheckLoadBundleFromLocalFile (bundleName, succeedCallBack, ()=>{
-                if(_bundleLoadCoroutine != null)
-                StopCoroutine(_bundleLoadCoroutine);
-            }));
+            CoroutineUtil.Instance.StartCoroutine (
+                AssetBundleManager.Instance.CheckLoadBundleFromLocalFile (
+                    bundleName, succeedCallBack, () =>
+                    {
+                        if (_bundleLoadCoroutine != null)
+                            StopCoroutine (_bundleLoadCoroutine);
+                    }));
 
             //TODO 如果上面协程启动 request 失败 这里会卡住
             //TODO 拟通过获取本协程索引 通过关闭协程结束下面的逻辑

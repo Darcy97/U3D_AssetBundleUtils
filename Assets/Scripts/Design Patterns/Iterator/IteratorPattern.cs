@@ -3,7 +3,7 @@
  * @version: 0.0.0
  * @Author: Darcy
  * @Date: 2019-07-30 16:58:52
- * @LastEditTime: 2019-07-30 21:49:05
+ * @LastEditTime: 2019-07-30 21:52:41
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -32,7 +32,7 @@ namespace DesignPattern
 
         private void Start ()
         {
-            transform.Find("Canvas/Start").GetComponent<Button>().onClick.AddListener(OnStartButtonClick);
+            transform.Find ("Canvas/Start").GetComponent<Button> ().onClick.AddListener (OnStartButtonClick);
         }
 
         public void OnStartButtonClick ()
@@ -55,7 +55,7 @@ namespace DesignPattern
             {
                 int i = (int) iterator.GetCurrent ();
                 Log.Print (i.ToString ());
-                iterator.Next();
+                iterator.Next ();
             }
         }
     }

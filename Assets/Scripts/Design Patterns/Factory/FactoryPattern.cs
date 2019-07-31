@@ -1,20 +1,16 @@
+using System;
 using DesignPattern;
+using Libs;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
-public class FactoryPattern : MonoBehaviour
+public class FactoryPattern : PatternMonoBase
 {
     private void Awake ()
     {
-        //TODO 为空检测
-        transform.Find ("Canvas/TButton").GetComponent<Button> ().onClick.AddListener (OnTButtonClick);
-        transform.Find ("Canvas/SButton").GetComponent<Button> ().onClick.AddListener (OnSButtonClick);
-        transform.Find ("Canvas/DButton").GetComponent<Button> ().onClick.AddListener (OnDButtonClick);
-    }
-
-    private Button GetButton ()
-    {
-        //todo
-        return null;
+        ButtonRegister ("Canvas/TButton", OnTButtonClick);
+        ButtonRegister ("Canvas/SButton", OnSButtonClick);
+        ButtonRegister ("Canvas/DButton", OnDButtonClick);
     }
 
     private void OnTButtonClick ()

@@ -3,7 +3,7 @@
  * @version: 0.0.0
  * @Author: Darcy
  * @Date: 2019-07-30 16:58:52
- * @LastEditTime: 2019-07-30 21:57:40
+ * @LastEditTime: 2019-07-31 11:03:08
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -27,12 +27,12 @@ using UnityEngine.UI;
 namespace DesignPattern
 {
 
-    public class IteratorPattern : MonoBehaviour
+    public class IteratorPattern : PatternMonoBase
     {
 
         private void Awake ()
         {
-            transform.Find ("Canvas/Start").GetComponent<Button> ().onClick.AddListener (OnStartButtonClick);
+            ButtonRegister("Canvas/Start", OnStartButtonClick);
         }
 
         public void OnStartButtonClick ()

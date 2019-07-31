@@ -4,7 +4,7 @@ using Libs;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-public class FactoryPattern : PatternMonoBase
+public class FoodFactoryPattern : PatternMonoBase
 {
     private void Awake ()
     {

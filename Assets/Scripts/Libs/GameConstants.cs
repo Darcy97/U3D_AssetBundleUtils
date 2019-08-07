@@ -3,7 +3,7 @@
  * @version: 0.0.1
  * @Author: Darcy
  * @Date: 2019-07-18 14:21:42
- * @LastEditTime: 2019-08-07 12:06:04
+ * @LastEditTime: 2019-08-07 15:01:39
  */
 using System;
 using UnityEngine;
@@ -62,6 +62,7 @@ namespace Libs
         public static WaitForSeconds WaitTwoIn100Second = new WaitForSeconds (0.002f);
         public static WaitForSeconds WaitTwoSecond = new WaitForSeconds (2f);
         public static WaitForEndOfFrame WaitForEndOfFrame = new WaitForEndOfFrame();
+        public static WaitForSeconds Wait1In60Second = new WaitForSeconds (1/60);
 
     }
 }

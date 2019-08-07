@@ -5,7 +5,7 @@ using System.Net.Mime;
  * @version: 0.0.0
  * @Author: Darcy
  * @Date: 2019-07-20 14:18:45
- * @LastEditTime: 2019-08-07 13:45:43
+ * @LastEditTime: 2019-08-07 14:31:18
  */
 using System.Collections;
 using AssetBundleLibs;
@@ -22,13 +22,34 @@ namespace Libs
         {
             get
             {
-                return Singleton<SceneExchangeManager>.Instance;
+                if (_instance != null)
+                    return _instance;
+                    
+                _instance = GameObject.FindObjectOfType<SceneExchangeManager> ();
+                return _instance;
             }
+            private set{}
         }
+
+        public static SceneExchangeManager _instance;
         private SceneExchangeManager () { }
         #endregion
 
         public Image BundleLoadSlider;
+        private void Awake ()
+        {
+
+            if (_instance == null)
+            {
+                _instance = this;
+                
+            }
+            else if (_instance != this)
+            {
+                Destroy (this.gameObject);
+            }
+
+        }
 
         /// <summary>
         /// 切换场景卸载加载资源 显示loadding界面等
@@ -59,7 +80,6 @@ namespace Libs
             AssetBundleManager.Instance.UnLoadBundle (currentScene.ToLower (), true);
         }
 
-        private Coroutine _bundleLoadCoroutine;
         private void LoadNewSceneBundle (string newScene, Action succeedCallBack = null)
         {
             if (succeedCallBack == null)
@@ -67,8 +87,7 @@ namespace Libs
                 Log.Error ("null");
             }
             // AssetBundleManager.Instance.CheckLoadBundleFromLocalFile (newScene);
-            _bundleLoadCoroutine = CoroutineUtil.Instance.StartCoroutine ((LoadBundle (newScene.ToLower (), succeedCallBack)));
-
+            LoadBundle (newScene.ToLower (), succeedCallBack);
         }
 
         private bool CheckCanLoadSceneFromLocal (string sceneName)
@@ -76,35 +95,20 @@ namespace Libs
             return AssetBundleManager.Instance.CheckBundleExistInLocalFile (sceneName.ToLower ());
         }
 
-        public IEnumerator LoadBundle (string bundleName, Action succeedCallBack = null)
+        public void LoadBundle (string bundleName, Action succeedCallBack = null)
         {
             CoroutineUtil.Instance.StartCoroutine (
                 AssetBundleManager.Instance.CheckLoadBundleFromLocalFile (
-                    bundleName, succeedCallBack, () =>
-                    {
-                        if (_bundleLoadCoroutine != null)
-                            StopCoroutine (_bundleLoadCoroutine);
-                    }));
-
-            //TODO 如果上面协程启动 request 失败 这里会卡住
-            //TODO 拟通过获取本协程索引 通过关闭协程结束下面的逻辑
-            yield return new WaitUntil (() =>
-                AssetBundleManager.Instance.GetBundleLoadRequestByName (bundleName) != null);
-            var request = AssetBundleManager.Instance.GetBundleLoadRequestByName (bundleName);
-            //TODO request报空问题待解决
-            while (request != null && !request.isDone)
-            {
-                Log.Print (request.progress.ToString ());
-                BundleLoadSlider.fillAmount = request.progress;
-                yield return GameConstants.WaitTwoIn100Second;
-            }
-
-            yield return 0;
+                    bundleName,
+                    succeedCallBack,
+                    null,
+                    LoadingBundle));
         }
 
-        private void LoadingBundle ()
+        private void LoadingBundle (float progress)
         {
-
+            Log.Print (progress.ToString ());
+            BundleLoadSlider.fillAmount = progress;
         }
 
         #endregion

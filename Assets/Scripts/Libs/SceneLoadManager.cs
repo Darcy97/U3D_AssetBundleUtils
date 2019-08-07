@@ -3,14 +3,14 @@
  * @version: 0.0.0
  * @Author: Darcy
  * @Date: 2019-07-19 15:11:41
- * @LastEditTime: 2019-08-07 12:22:50
+ * @LastEditTime: 2019-08-07 14:31:56
  */
 
 using UnityEngine;
 using UnityEngine.SceneManagement;
 namespace Libs
 {
-    public class SceneLoadManager : MonoBehaviour
+    public class SceneLoadManager
     {
 
         #region Singleton

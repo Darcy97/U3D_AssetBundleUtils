@@ -1,10 +1,11 @@
+using System.Linq;
 using System.Net;
 /*
  * @Descripttion: Load Asssetbundle
  * @version: 0.0.1
  * @Author: Darcy
  * @Date: 2019-07-19 14:38:57
- * @LastEditTime: 2019-08-07 12:15:50
+ * @LastEditTime: 2019-08-07 15:20:01
  */
 using System;
 using System.Collections;
@@ -49,7 +50,10 @@ namespace AssetBundleLibs
         /// </summary>
         /// <param name="bundleName"></param>
         /// <returns></returns>
-        public IEnumerator CheckLoadBundleFromLocalFile (string bundleName, Action loadSucceedCallBack = null, Action loadFailedCallBack = null)
+        public IEnumerator CheckLoadBundleFromLocalFile (string bundleName,
+            Action loadSucceedCallBack = null,
+            Action loadFailedCallBack = null,
+            Action<float> loadingCallBack = null)
         {
 
             if (string.IsNullOrEmpty (bundleName))
@@ -67,7 +71,29 @@ namespace AssetBundleLibs
                     var _bundeCreateRequest = new AssetBundleCreateRequest ();
                     bundleCreateRequests.Add (bundleName, _bundeCreateRequest);
 
-                    yield return _bundeCreateRequest = AssetBundle.LoadFromFileAsync (path);
+                    _bundeCreateRequest = AssetBundle.LoadFromFileAsync (path);
+
+                    int displayProgress = 1;
+                    int toProgress = 0;
+                    while (!_bundeCreateRequest.isDone)
+                    {
+
+                        toProgress = (int) (100 * _bundeCreateRequest.progress);
+                        while (displayProgress <= toProgress)
+                        {
+                            loadingCallBack?.Invoke ((float) displayProgress / 100.0f);
+                            yield return GameConstants.Wait1In60Second;
+                            displayProgress++;
+                        }
+                        yield return GameConstants.Wait1In60Second;
+                    }
+                    toProgress = 100;
+                    while (displayProgress <= toProgress)
+                    {
+                        loadingCallBack?.Invoke ((float) displayProgress / 100.0f);
+                        yield return GameConstants.Wait1In60Second;
+                        displayProgress++;
+                    }
 
                     if (_bundeCreateRequest.assetBundle != null)
                     {
@@ -78,8 +104,7 @@ namespace AssetBundleLibs
                     {
                         loadFailedCallBack?.Invoke ();
                     }
-                    yield return GameConstants.Wait2In10Second;
-                    //bundleCreateRequests.Remove (bundleName);
+                    bundleCreateRequests.Remove (bundleName);
                 }
                 else
                 {
@@ -121,21 +146,34 @@ namespace AssetBundleLibs
             bundleWebRequests.Add (_bundleName, request);
             request.SendWebRequest ();
 
-            int displayProcess = 0;
-            int toProcess = 0;
+            int displayProgress = 1;
+            int toProgress = 0;
             while (!request.isDone)
             {
-                toProcess = (int) (100 * request.downloadProgress);
-                while (displayProcess < toProcess)
+                toProgress = (int) (100 * request.downloadProgress);
+                while (displayProgress <= toProgress)
                 {
-                    displayProcess++;
-                    downloadingCallBack?.Invoke ((float)displayProcess/100.0f);
-                    yield return GameConstants.WaitForEndOfFrame;
+
+                    downloadingCallBack?.Invoke ((float) displayProgress / 100.0f);
+                    yield return GameConstants.Wait1In60Second;
+                    displayProgress++;
                 }
+                yield return GameConstants.Wait1In60Second;
+            }
+            toProgress = 100;
+            while (displayProgress <= toProgress)
+            {
+                downloadingCallBack?.Invoke ((float) displayProgress / 100.0f);
+                yield return GameConstants.Wait1In60Second;
+                displayProgress++;
             }
 
             if (request.isHttpError || request.isNetworkError)
+            {
                 Log.Error (request.error);
+                //TODO display dialog
+                yield break;
+            }
 
             string localSavePath = Path.Combine (AssetPathManager.GetAssetBundleOutPutPath (), cacheItem.BundleName);
             //*删除旧版本bundle */
@@ -169,11 +207,10 @@ namespace AssetBundleLibs
             {
                 Log.Error (e.Message);
             }
-            yield return GameConstants.Wait2In10Second;
+            // yield return GameConstants.Wait2In10Second;
             bundleWebRequests.Remove (_bundleName);
             request.Dispose ();
-            // AssetBundle bundle = DownloadHandlerAssetBundle.GetContent (request);
-            // AddBundleCache (bundle);
+            downloadSucceedCallBack?.Invoke();
         }
 
         /// <summary>
@@ -265,7 +302,7 @@ namespace AssetBundleLibs
 
         private void AddBundleCache (AssetBundle bundle)
         {
-            if (bundle != null)
+            if (bundle != null && !bundleCaches.ContainsKey (bundle.name))
                 bundleCaches.Add (bundle.name, bundle);
         }
 

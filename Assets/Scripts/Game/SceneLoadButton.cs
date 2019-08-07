@@ -16,7 +16,6 @@ public class SceneLoadButton : MonoBehaviour
         GetComponent<Button> ().onClick.AddListener (OnButtonClick);
     }
 
-    private Coroutine _bundleDownloadCoroutine;
     public void OnButtonClick ()
     {
         if (AssetBundleManager.Instance.CheckBundleExistInLocalFile (ToLoadSceneName.ToLower ()))
@@ -40,10 +39,10 @@ public class SceneLoadButton : MonoBehaviour
 
     }
 
-    private void DownloadingAssetbundle (float process)
+    private void DownloadingAssetbundle (float progress)
     {
-        Log.Print (process.ToString ());
-        SliderImage.fillAmount = process;
+        Log.Print (progress.ToString ());
+        SliderImage.fillAmount = progress;
     }
 
 }

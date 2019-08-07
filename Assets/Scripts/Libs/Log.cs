@@ -16,7 +16,7 @@ namespace Libs
             }
         }
 
-        public static void Print (Object messageObj, string details = "")
+        public static void Print (object messageObj, string details = "")
         {
             string message = messageObj.ToString();
             if (GameConstants.IS_DEBUG_LOG)
@@ -39,7 +39,7 @@ namespace Libs
             }
         }
 
-        public static void Error (Object messageObj, string details = "")
+        public static void Error (object messageObj, string details = "")
         {
             string message = messageObj.ToString();
             if (GameConstants.IS_DEBUG_LOG)

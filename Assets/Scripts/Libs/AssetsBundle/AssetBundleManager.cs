@@ -4,7 +4,7 @@ using System.Net;
  * @version: 0.0.1
  * @Author: Darcy
  * @Date: 2019-07-19 14:38:57
- * @LastEditTime: 2019-07-22 13:44:31
+ * @LastEditTime: 2019-08-07 12:15:50
  */
 using System;
 using System.Collections;
@@ -78,7 +78,7 @@ namespace AssetBundleLibs
                     {
                         loadFailedCallBack?.Invoke ();
                     }
-                    yield return GameConstants.WaitTwoIn10Second;
+                    yield return GameConstants.Wait2In10Second;
                     //bundleCreateRequests.Remove (bundleName);
                 }
                 else
@@ -102,7 +102,7 @@ namespace AssetBundleLibs
         /// <param name="downloadSucceedCallBack"></param>
         /// <param name="downloadFailedCallBack">范</param>
         /// <returns></returns>
-        public IEnumerator CheckDownloadBundleFromRemoteServer (BundleCacheItem cacheItem, Action downloadSucceedCallBack = null, Action downloadFailedCallBack = null)
+        public IEnumerator CheckDownloadBundleFromRemoteServer (BundleCacheItem cacheItem, Action downloadSucceedCallBack = null, Action downloadFailedCallBack = null, Action<float> downloadingCallBack = null)
         {
             if (!cacheItem.NeedDownload ())
             {
@@ -119,14 +119,20 @@ namespace AssetBundleLibs
             UnityEngine.Networking.UnityWebRequest request = UnityWebRequest.Get (downloadUrl);
             request.timeout = 600;
             bundleWebRequests.Add (_bundleName, request);
-            yield return request.SendWebRequest ();
+            request.SendWebRequest ();
 
-            // int i = 0;
-            // while(i < 1000)
-            // {
-            //     yield return GameConstants.WaitTwoIn10Second;
-            //     i++;
-            // }
+            int displayProcess = 0;
+            int toProcess = 0;
+            while (!request.isDone)
+            {
+                toProcess = (int) (100 * request.downloadProgress);
+                while (displayProcess < toProcess)
+                {
+                    displayProcess++;
+                    downloadingCallBack?.Invoke ((float)displayProcess/100.0f);
+                    yield return GameConstants.WaitForEndOfFrame;
+                }
+            }
 
             if (request.isHttpError || request.isNetworkError)
                 Log.Error (request.error);
@@ -163,7 +169,7 @@ namespace AssetBundleLibs
             {
                 Log.Error (e.Message);
             }
-            yield return GameConstants.WaitTwoIn10Second;
+            yield return GameConstants.Wait2In10Second;
             bundleWebRequests.Remove (_bundleName);
             request.Dispose ();
             // AssetBundle bundle = DownloadHandlerAssetBundle.GetContent (request);

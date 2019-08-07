@@ -5,7 +5,7 @@ using System.Net.Mime;
  * @version: 0.0.0
  * @Author: Darcy
  * @Date: 2019-07-20 14:18:45
- * @LastEditTime: 2019-07-23 19:41:40
+ * @LastEditTime: 2019-08-07 13:45:43
  */
 using System.Collections;
 using AssetBundleLibs;
@@ -68,6 +68,7 @@ namespace Libs
             }
             // AssetBundleManager.Instance.CheckLoadBundleFromLocalFile (newScene);
             _bundleLoadCoroutine = CoroutineUtil.Instance.StartCoroutine ((LoadBundle (newScene.ToLower (), succeedCallBack)));
+
         }
 
         private bool CheckCanLoadSceneFromLocal (string sceneName)
@@ -99,6 +100,11 @@ namespace Libs
             }
 
             yield return 0;
+        }
+
+        private void LoadingBundle ()
+        {
+
         }
 
         #endregion

@@ -4,9 +4,10 @@ using System.Collections.Generic;
  * @version: 0.0.0
  * @Author: Darcy
  * @Date: 2019-07-31 16:36:48
- * @LastEditTime: 2019-07-31 17:21:16
+ * @LastEditTime: 2019-07-31 20:22:18
  */
 using Ingredient;
+using Libs;
 namespace FactoryPattern
 {
     public abstract class Pizza
@@ -19,5 +20,20 @@ namespace FactoryPattern
         private Clam clam;
 
         public abstract void Prepare ();
+
+        public void Bake ()
+        {
+            Log.Print ("Bake", name);
+        }
+
+        public void Cut ()
+        {
+            Log.Print ("Cut", name);
+        }
+
+        public void AA ()
+        {
+            Log.Print ("", name);
+        }
     }
 }

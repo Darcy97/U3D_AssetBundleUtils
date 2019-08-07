@@ -3,7 +3,7 @@
  * @version: 0.0.1
  * @Author: Darcy
  * @Date: 2019-07-18 14:21:42
- * @LastEditTime: 2019-07-22 11:18:52
+ * @LastEditTime: 2019-08-07 12:06:04
  */
 using System;
 using UnityEngine;
@@ -58,9 +58,10 @@ namespace Libs
         public const string IRVUE_SCENE_NAME = "IrvueImage";
         public const string MAIN_SCENE_NAME = "MainScene";
 
-        public static WaitForSeconds WaitTwoIn10Second = new WaitForSeconds (0.2f);
+        public static WaitForSeconds Wait2In10Second = new WaitForSeconds (0.2f);
         public static WaitForSeconds WaitTwoIn100Second = new WaitForSeconds (0.002f);
         public static WaitForSeconds WaitTwoSecond = new WaitForSeconds (2f);
+        public static WaitForEndOfFrame WaitForEndOfFrame = new WaitForEndOfFrame();
 
     }
 }

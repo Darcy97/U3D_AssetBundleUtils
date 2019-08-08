@@ -3,11 +3,12 @@
  * @version: 0.0.0
  * @Author: Darcy
  * @Date: 2019-07-31 17:00:19
- * @LastEditTime: 2019-07-31 17:06:39
+ * @LastEditTime: 2019-08-07 20:36:58
  */
 using DesignPattern;
 using Ingredient;
 using Libs;
+using FactoryPattern;
 public class PizzaFactoryPattern : PatternMonoBase
 {
     private void Awake ()
@@ -17,7 +18,9 @@ public class PizzaFactoryPattern : PatternMonoBase
 
     private void OnStartButtonClick ()
     {
-        var dough = new Dough ();
-        Log.Print (dough.Name);
+        var factory = new NYPizzaStore();
+        var pizza = factory.OrderPizza(PizzaType.Cheese);
+        Log.Print(pizza.GetName());
+        
     }
 }

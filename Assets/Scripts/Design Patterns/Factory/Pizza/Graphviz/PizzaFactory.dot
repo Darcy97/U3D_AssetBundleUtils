@@ -1,0 +1,154 @@
+digraph{
+
+    bgcolor = "#242931"
+    ratio  = auto
+    //[dir = back style = dashed color = "#9EC07A"]
+
+    ratio = auto
+    ranksep = 0.5
+
+    splines="true";
+
+    node [color = "#AD5A5F" fontcolor = "#5EAFB6" shape = record fontsize = 10] 
+    edge [color = "#AD5A5F"fontcolor = "#5EAFB6"] //线条颜色
+
+    NYPizzaStore[label = "{NYPizzaStore|-CreatePizza()}"]
+    IPizzaIngredientFactory[label = "
+        {
+            《《interface》》\nIPizzaIngredientFactory|
+            -createDough()\n
+            -createSauce()\n
+            -createCheese()\n
+            -createVeggies()\n
+            -createPepperoni()\n
+            -createClam()
+        }"
+    ]
+
+    NYPizzaIngredientFactory[label = "
+        {
+            《《Calss》》\nNYPizzaIngredientFactory|
+            -createDough()\n
+            -createSauce()\n
+            -createCheese()\n
+            -createVeggies()\n
+            -createPepperoni()\n
+            -createClam()
+        }"
+    ]
+
+    ChicagoPizzaIngredientFactory[label = "
+        {
+            《《Calss》》\nChicagoPizzaIngredientFactory|
+            -createDough()\n
+            -createSauce()\n
+            -createCheese()\n
+            -createVeggies()\n
+            -createPepperoni()\n
+            -createClam()
+        }"
+    ]
+
+    //relation
+    IPizzaIngredientFactory:e
+    -> NYPizzaIngredientFactory:n[dir = back style = dashed color = "#9EC07A"]
+    IPizzaIngredientFactory:w
+    -> ChicagoPizzaIngredientFactory:n[dir = back style = dashed color = "#9EC07A"]
+    
+
+
+
+    //ingredient
+    Dough[shape = box, label = "<<Abstract>>\nDough"]
+    Sauce[shape = box, label = "<<Abstract>>\nSauce"]
+    Cheese[shape = box, label = "<<Abstract>>\nCheese"]
+    Clams[shape = box, label = "<<Abstract>>\nClams"]
+    
+    ThickCrustDough[label = "{《Class》\nThickCrustDough|\n}"]
+    PlumTomatoSauce[label = "{《《Class》》\nPlumTomatoSauce|\n}"]
+    MCheese[label = "{《《Class》》\nMCheese|\n}"]
+    FrozenClams[label = "{《《Class》》\nFrozenClams|\n}"]
+    
+
+    ThinCrustDough[label = "{《Class》\nThinCrustDough|\n}"]
+    MarinaraSauce[label = "{《《Class》》\nMarinaraSauce|\n}"]
+    RCheese[label = "{《《Class》》\nRCheese|\n}"]
+    FreshClams[label = "{《《Class》》\nFreshClams|\n}"]
+
+    
+
+
+    //logic
+    NYPizzaStore:s
+    ->
+    {
+        Dough
+        Sauce
+        Cheese
+        Clams
+    }
+
+    NYPizzaStore -> IPizzaIngredientFactory
+
+    // ChicagoPizzaIngredientFactory:s
+    // ->{
+    //     ThickCrustDough:n
+    //     PlumTomatoSauce:n
+    //     MCheese
+    //     FrozenClams
+    // }
+
+    ChicagoPizzaIngredientFactory:s -> ThickCrustDough:n
+    ChicagoPizzaIngredientFactory:s -> PlumTomatoSauce:n
+    ChicagoPizzaIngredientFactory:s -> MCheese:n
+    ChicagoPizzaIngredientFactory:s -> FrozenClams:n
+
+    // NYPizzaIngredientFactory:s
+    // ->{
+    //     ThinCrustDough
+    //     MarinaraSauce
+    //     RCheese
+    //     FreshClams
+    // }
+
+    NYPizzaIngredientFactory:s -> ThinCrustDough:n[color = cyan]
+    NYPizzaIngredientFactory:s -> MarinaraSauce:n[color = cyan]
+    NYPizzaIngredientFactory:s -> RCheese:n[color = cyan]
+    NYPizzaIngredientFactory:s -> FreshClams:n[color = cyan]
+
+    
+    //relation
+    Dough:s
+    -> ThickCrustDough:n[dir = back style = dashed color = "#9EC07A"]
+    Dough:s 
+    -> ThinCrustDough:n
+    [dir = back style = dashed color = "#9EC07A"]
+
+
+    Sauce:s
+    -> PlumTomatoSauce:n 
+    [dir = back style = dashed color = "#9EC07A"]
+    Sauce:s
+    -> MarinaraSauce:n
+    [dir = back style = dashed color = "#9EC07A"]
+
+    Cheese:s
+    -> MCheese:n 
+    [dir = back style = dashed color = "#9EC07A"]
+    Cheese:s
+    -> RCheese:n
+    [dir = back style = dashed color = "#9EC07A"]
+
+    Clams:s
+    -> FrozenClams:n
+    [dir = back style = dashed color = "#9EC07A"]
+    Clams:s
+    -> FreshClams:n
+    [dir = back style = dashed color = "#9EC07A"]
+
+    // {rank = same; Dough Sauce Cheese Clams IPizzaIngredientFactory}
+
+
+
+
+}

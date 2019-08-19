@@ -1,0 +1,10 @@
+@startuml
+class FoodFactoryPattern {
+    - Awake() : void
+    - OnTButtonClick() : void
+    - OnSButtonClick() : void
+    - OnDButtonClick() : void
+    - CookFood(type:FoodType) : void
+}
+PatternMonoBase <|-- FoodFactoryPattern
+@enduml

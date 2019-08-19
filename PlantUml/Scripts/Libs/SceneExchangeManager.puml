@@ -1,0 +1,14 @@
+@startuml
+class SceneExchangeManager {
+    + {static} Instance : SceneExchangeManager <<get>>
+    - SceneExchangeManager()
+    + BundleLoadSlider : Image
+    + SceneExchange(currentScene:string, newScene:string, succeedCallBack:Action) : bool
+    - UnloadCurrentSceneBundle(currentScene:string) : void
+    - _bundleLoadCoroutine : Coroutine
+    - LoadNewSceneBundle(newScene:string, succeedCallBack:Action) : void
+    - CheckCanLoadSceneFromLocal(sceneName:string) : bool
+    + LoadBundle(bundleName:string, succeedCallBack:Action) : IEnumerator
+}
+MonoBehaviour <|-- SceneExchangeManager
+@enduml

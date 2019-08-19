@@ -1,0 +1,5 @@
+@startuml
+class Clam {
+}
+Ingredient <|-- Clam
+@enduml

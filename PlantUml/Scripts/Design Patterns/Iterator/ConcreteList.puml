@@ -1,0 +1,10 @@
+@startuml
+class ConcreteList {
+    collection : List<int>
+    + ConcreteList(list:List<int>)
+    + GetIterator() : Iterator
+    + Count : int <<get>>
+    + GetElement(index:int) : int
+}
+IListCollection <|-- ConcreteList
+@enduml

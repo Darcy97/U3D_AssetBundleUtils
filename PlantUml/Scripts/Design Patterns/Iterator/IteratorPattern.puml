@@ -1,0 +1,8 @@
+@startuml
+class IteratorPattern {
+    - Awake() : void
+    + OnStartButtonClick() : void
+    - PatternStart() : void
+}
+PatternMonoBase <|-- IteratorPattern
+@enduml

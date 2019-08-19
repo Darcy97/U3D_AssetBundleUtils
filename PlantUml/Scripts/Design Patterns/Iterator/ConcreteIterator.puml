@@ -1,0 +1,12 @@
+@startuml
+class ConcreteIterator {
+    - _list : ConcreteList
+    - _index : int
+    + ConcreteIterator(list:ConcreteList)
+    + MoveNext() : bool
+    + GetCurrent() : object
+    + Reset() : void
+    + Next() : void
+}
+Iterator <|-- ConcreteIterator
+@enduml

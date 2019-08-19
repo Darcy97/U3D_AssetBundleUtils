@@ -1,0 +1,6 @@
+@startuml
+class UIDialog {
+    # CloseButton : Button
+}
+UIBase <|-- UIDialog
+@enduml

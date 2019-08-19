@@ -1,0 +1,27 @@
+@startuml
+class AssetBundleManager {
+    + {static} Instance : AssetBundleManager <<get>>
+    - AssetBundleManager()
+    - bundleCaches : Dictionary<String, AssetBundle>
+    - bundleWebRequests : Dictionary<String, UnityWebRequest>
+    - bundleCreateRequests : Dictionary<String, AssetBundleCreateRequest>
+    - _bundlDownloadUrl : string
+    + Init(bundleLoadUrl:string) : void
+    + CheckLoadBundleFromLocalFile(bundleName:string, loadSucceedCallBack:Action, loadFailedCallBack:Action) : IEnumerator
+    + CheckDownloadBundleFromRemoteServer(cacheItem:BundleCacheItem, downloadSucceedCallBack:Action, downloadFailedCallBack:Action) : IEnumerator
+    + UnLoadBundle(bundleName:string, unLoadAllLoadedObjs:bool) : void
+    + NeedDownloadNewAssetbundle(item:BundleCacheItem) : bool
+    + CheckBundleExistInLocalFile(name:string) : bool
+    + LoadResourceFromBundle(resourceName:string, bundleName:string) : T
+    + GetBundleWebRequestByName(name:string) : UnityWebRequest
+    + GetBundleLoadRequestByName(name:string) : AssetBundleCreateRequest
+    - IsBundleExistInCache(name:string) : bool
+    - GetAssetbundleLocalSavaPath(bundleName:string) : string
+    - GetBundleRemoteUrl(bundleName:string, version:string) : string
+    - AddBundleCache(bundle:AssetBundle) : void
+}
+enum BundleType {
+    Default,
+    Wys,
+}
+@enduml

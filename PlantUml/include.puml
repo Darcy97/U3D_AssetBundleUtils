@@ -1,0 +1,42 @@
+@startuml
+!include .\/Scripts/Game/SceneLoadButton.puml
+!include .\/Scripts/Game/BackToMainScene.puml
+!include .\/Scripts/Game/LoadImage.puml
+!include .\/Scripts/Libs/CoroutineUtil.puml
+!include .\/Scripts/Libs/SceneLoadManager.puml
+!include .\/Scripts/Libs/GameConstants.puml
+!include .\/Scripts/Libs/UnityUtil.puml
+!include .\/Scripts/Libs/Log.puml
+!include .\/Scripts/Libs/AssetPathManager.puml
+!include .\/Scripts/Libs/SceneExchangeManager.puml
+!include .\/Scripts/Libs/Singleton.puml
+!include .\/Scripts/Design Patterns/DesignPatternsHelper.puml
+!include .\/Editor/AssetBundle/AssetBundleMenuItems.puml
+!include .\/Editor/AssetBundle/BundleBuildScript.puml
+!include .\/Scripts/Libs/AssetsBundle/AssetBundleManager.puml
+!include .\/Scripts/Libs/AssetsBundle/BundleCacheItem.puml
+!include .\/Scripts/Libs/UI/UIBase.puml
+!include .\/Scripts/Libs/UI/UIDialog.puml
+!include .\/Scripts/Design Patterns/Iterator/IteratorPattern.puml
+!include .\/Scripts/Design Patterns/Iterator/ConcreteList.puml
+!include .\/Scripts/Design Patterns/Iterator/Iterator.puml
+!include .\/Scripts/Design Patterns/Iterator/IListCollection.puml
+!include .\/Scripts/Design Patterns/Iterator/ConcreteIterator.puml
+!include .\/Scripts/Design Patterns/Base/PatternMonoBase.puml
+!include .\/VSCode/Plugins/Editor/VSCode.puml
+!include .\/Scripts/Design Patterns/Factory/Food/TomatoScrambledEggs.puml
+!include .\/Scripts/Design Patterns/Factory/Food/FoodFactoryPattern.puml
+!include .\/Scripts/Design Patterns/Factory/Food/Food.puml
+!include .\/Scripts/Design Patterns/Factory/Food/FoodFactory.puml
+!include .\/Scripts/Design Patterns/Factory/Food/ShreddedPorkWithPotatoe.puml
+!include .\/Scripts/Design Patterns/Factory/Pizza/PizzaFactoryPattern.puml
+!include .\/Scripts/Design Patterns/Factory/Pizza/Pizza.puml
+!include .\/Scripts/Design Patterns/Factory/Pizza/PizzaFactory.puml
+!include .\/Scripts/Design Patterns/Factory/Pizza/Ingredient/Ingredient.puml
+!include .\/Scripts/Design Patterns/Factory/Pizza/Ingredient/Pepperoni.puml
+!include .\/Scripts/Design Patterns/Factory/Pizza/Ingredient/Sauce.puml
+!include .\/Scripts/Design Patterns/Factory/Pizza/Ingredient/Clam.puml
+!include .\/Scripts/Design Patterns/Factory/Pizza/Ingredient/Dough.puml
+!include .\/Scripts/Design Patterns/Factory/Pizza/Ingredient/Veggies.puml
+!include .\/Scripts/Design Patterns/Factory/Pizza/Ingredient/Cheese.puml
+@enduml

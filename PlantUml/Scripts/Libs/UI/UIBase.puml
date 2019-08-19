@@ -1,0 +1,17 @@
+@startuml
+class UIBase {
+    # m_RectTransForm : RectTransform
+    # m_Data : object
+    # <<override>> Awake() : void
+    # <<override>> Start() : void
+    # <<override>> OnDestroy() : void
+    # <<override>> OnEnable() : void
+    + <<virtual>> SetData(data:object, needRefresh:bool) : void
+    + <<virtual>> Refresh() : void
+    # <<virtual>> OnButtonClickHandler(button:GameObject) : void
+    # waitSecond : float = 0.5f
+    - WaitForNextClick() : void
+    # <<virtual>> onToggleSelect(toggle:GameObject, isSelect:bool) : void
+}
+UIBehaviour <|-- UIBase
+@enduml

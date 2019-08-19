@@ -1,0 +1,11 @@
+@startuml
+class SceneLoadButton {
+    + ToLoadSceneName : string
+    + SliderImage : Image
+    - Awake() : void
+    - _bundleDownloadCoroutine : Coroutine
+    + OnButtonClick() : void
+    + DownloadBundleAndLoadScene(sceneName:string) : IEnumerator
+}
+MonoBehaviour <|-- SceneLoadButton
+@enduml

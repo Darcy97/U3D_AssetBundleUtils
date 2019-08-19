@@ -1,0 +1,6 @@
+@startuml
+class TomatoScrambledEggs {
+    + <<override>> PrintFoodName() : void
+}
+Food <|-- TomatoScrambledEggs
+@enduml

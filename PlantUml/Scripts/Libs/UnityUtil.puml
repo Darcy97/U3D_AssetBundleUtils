@@ -1,0 +1,5 @@
+@startuml
+class UnityUtil {
+    + {static} persistentDataPath : string <<get>>
+}
+@enduml

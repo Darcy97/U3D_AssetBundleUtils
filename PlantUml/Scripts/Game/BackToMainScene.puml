@@ -1,0 +1,9 @@
+@startuml
+class BackToMainScene {
+    + BackButton : Button
+    - mainSceneName : string
+    - Awake() : void
+    - OnBackBtnClick() : void
+}
+MonoBehaviour <|-- BackToMainScene
+@enduml

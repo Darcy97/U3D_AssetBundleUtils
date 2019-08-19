@@ -1,0 +1,6 @@
+@startuml
+class BundleBuildScript {
+    + {static} BuildAssetBundlesAll() : void
+    + {static} DeleteAllFile() : bool
+}
+@enduml

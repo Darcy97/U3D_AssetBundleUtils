@@ -1,0 +1,5 @@
+@startuml
+class Veggies {
+}
+Ingredient <|-- Veggies
+@enduml

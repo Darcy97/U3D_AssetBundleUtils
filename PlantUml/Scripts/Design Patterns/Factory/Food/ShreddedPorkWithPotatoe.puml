@@ -1,0 +1,6 @@
+@startuml
+class ShreddedPorkWithPotatoe {
+    + <<override>> PrintFoodName() : void
+}
+Food <|-- ShreddedPorkWithPotatoe
+@enduml

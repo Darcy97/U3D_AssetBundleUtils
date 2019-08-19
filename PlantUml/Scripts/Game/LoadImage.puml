@@ -1,0 +1,11 @@
+@startuml
+class LoadImage {
+    + img_index : int
+    - _image : Image
+    - _bundleName : string
+    - _imgNames : List<string>
+    - Awake() : void
+    - Start() : void
+}
+MonoBehaviour <|-- LoadImage
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+class GameConstants <<static>> {
+    + <<const>> BUNDLE_DOWNLOAD_URL : string = "http://127.0.0.1/Bundles"
+    + <<const>> IS_DEBUG_LOG : Boolean = true
+    + <<const>> VERSION : string = "0.0.1"
+    + {static} WYS_IMG_NAME_ARRAY : string[]
+    + {static} IRVUE_IMG_NAME_ARRAYs : string[]
+    + <<const>> WYS_SCENE_NAME : String = "WYSImage"
+    + <<const>> IRVUE_SCENE_NAME : string = "IrvueImage"
+    + <<const>> MAIN_SCENE_NAME : string = "MainScene"
+    + {static} WaitTwoIn10Second : WaitForSeconds
+    + {static} WaitTwoIn100Second : WaitForSeconds
+    + {static} WaitTwoSecond : WaitForSeconds
+}
+@enduml

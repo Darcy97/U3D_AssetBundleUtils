@@ -1,0 +1,5 @@
+@startuml
+abstract class Food {
+    + {abstract} PrintFoodName() : void
+}
+@enduml

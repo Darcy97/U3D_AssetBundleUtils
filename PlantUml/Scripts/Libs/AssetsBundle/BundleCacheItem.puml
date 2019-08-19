@@ -1,0 +1,10 @@
+@startuml
+class BundleCacheItem {
+    + BundleName : string <<get>> <<set>>
+    + BundleVersion : string <<get>> <<set>>
+    + LoadFinishCallBack : Action<bool> <<get>> <<set>>
+    + BundleCacheItem(_bundleName:string, _version:string, _finishCallBack:Action<bool>)
+    + NeedDownload() : bool
+    + CanDownload() : bool
+}
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+class PatternMonoBase {
+    # ButtonRegister(path:string, onClick:UnityAction) : void
+}
+MonoBehaviour <|-- PatternMonoBase
+@enduml

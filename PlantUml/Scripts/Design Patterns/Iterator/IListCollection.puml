@@ -1,0 +1,5 @@
+@startuml
+interface IListCollection {
+    GetIterator() : Iterator
+}
+@enduml

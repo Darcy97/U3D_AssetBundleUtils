@@ -1,0 +1,13 @@
+@startuml
+class AssetPathManager {
+    + {static} GetAssetBundleOutPutPath() : string
+    + {static} GetPlatformName() : string
+    - <<const>> PLATFROM_ANDROID : string = "Android"
+    - <<const>> PLATFROM_IOS : string = "iOS"
+    - <<const>> PLATFROM_WEB_GL : string = "WebGL"
+    - <<const>> PLATFROM_WEB_PLAYER : string = "WebPlayer"
+    - <<const>> PLATFROM_WINDOWS : string = "Windows"
+    - <<const>> PLATFROM_OSX : string = "OSX"
+    - {static} GetPlatformForBundles(platform:RuntimePlatform) : string
+}
+@enduml

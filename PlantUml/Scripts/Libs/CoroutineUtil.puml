@@ -1,0 +1,9 @@
+@startuml
+class CoroutineUtil {
+    {static} - _instance : CoroutineUtil = null
+    {static} + Instance : CoroutineUtil <<get>>
+    + {static} DelayAction(dTime:float, callback:System.Action) : IEnumerator
+    + {static} DoDelayAction(dTime:float, callback:System.Action) : void
+}
+MonoBehaviour <|-- CoroutineUtil
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+abstract class Pizza {
+    - name : string
+    - dough : Dough
+    - sauce : Sauce
+    - Veggieses : List<Veggies>
+    - pepperoni : Pepperoni
+    - clam : Clam
+    + {abstract} Prepare() : void
+    + Bake() : void
+    + Cut() : void
+    + AA() : void
+}
+@enduml

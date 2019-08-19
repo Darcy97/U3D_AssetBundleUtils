@@ -1,0 +1,10 @@
+@startuml
+class FoodFactory {
+    + {static} CreateFood(type:FoodType) : Food
+}
+enum FoodType {
+    ShreddedPorkWithPotatoe,
+    TomatoScrambledEggs,
+    Default,
+}
+@enduml

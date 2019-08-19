@@ -1,0 +1,7 @@
+@startuml
+class PizzaFactoryPattern {
+    - Awake() : void
+    - OnStartButtonClick() : void
+}
+PatternMonoBase <|-- PizzaFactoryPattern
+@enduml

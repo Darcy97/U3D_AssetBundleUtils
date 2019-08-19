@@ -1,0 +1,6 @@
+@startuml
+class AssetBundleMenuItems {
+    {static} + BuildAssetBundles() : void
+    {static} + DeleteAllBundleFiles() : void
+}
+@enduml

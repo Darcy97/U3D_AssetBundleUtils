@@ -1,0 +1,5 @@
+@startuml
+class Sauce {
+}
+Ingredient <|-- Sauce
+@enduml

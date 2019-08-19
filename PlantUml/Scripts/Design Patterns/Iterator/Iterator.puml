@@ -1,0 +1,8 @@
+@startuml
+interface Iterator {
+    MoveNext() : bool
+    GetCurrent() : object
+    Next() : void
+    Reset() : void
+}
+@enduml

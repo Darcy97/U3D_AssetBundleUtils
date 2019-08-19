@@ -1,0 +1,5 @@
+@startuml
+class Pepperoni {
+}
+Ingredient <|-- Pepperoni
+@enduml

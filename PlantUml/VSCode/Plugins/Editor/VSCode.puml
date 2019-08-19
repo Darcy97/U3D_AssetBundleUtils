@@ -1,0 +1,51 @@
+@startuml
+class VSCode <<static>> {
+    + <<const>> Version : float = 2.7f
+    + <<const>> VersionCode : string = "-RELEASE"
+    + <<const>> UnityDebuggerURL : string = "https://raw.githubusercontent.com/dotBunny/VSCode-Test/master/Downloads/unity-debug-101.vsix"
+    + {static} CodePath : string <<get>> <<set>>
+    {static} ProgramFilesx86() : string
+    + {static} Debug : bool <<get>> <<set>>
+    + {static} Enabled : bool <<get>> <<set>>
+    + {static} UseUnityDebugger : bool <<get>> <<set>>
+    + {static} WriteLaunchFile : bool <<get>> <<set>>
+    {static} AutomaticUpdates : bool <<get>> <<set>>
+    {static} GitHubVersion : float <<get>> <<set>>
+    {static} LastUpdate : DateTime <<get>> <<set>>
+    {static} LaunchPath : string <<get>>
+    {static} ProjectPath : string <<get>>
+    {static} RevertExternalScriptEditorOnExit : bool <<get>> <<set>>
+    {static} SettingsFolder : string <<get>>
+    {static} SettingsPath : string <<get>>
+    {static} UpdateTime : int <<get>> <<set>>
+    {static} VSCode()
+    {static} System_AppDomain_CurrentDomain_DomainUnload(sender:object, e:System.EventArgs) : void
+    + {static} SyncSolution() : void
+    + {static} UpdateSolution() : void
+    {static} AutodetectCodePath() : string
+    {static} CallVSCode(args:string) : void
+    {static} CheckForUpdate() : void
+    {static} ClearProjectFiles() : void
+    {static} FixUnityPreferences() : void
+    {static} GetDebugPort() : int
+    {static} InstallUnityDebugger() : void
+    {static} MenuOpenProject() : void
+    {static} PrintNotFound(path:string) : void
+    {static} ValidateMenuOpenProject() : bool
+    {static} VSCodePreferencesItem() : void
+    {static} OnOpenedAsset(instanceID:int, line:int) : bool
+    {static} OnPlaymodeStateChanged() : void
+    {static} OnScriptReload() : void
+    {static} ScrubFile(path:string) : void
+    {static} ScrubProjectContent(content:string) : string
+    {static} ScrubSolutionContent(content:string) : string
+    {static} UpdateLaunchFile() : void
+    {static} UpdateUnityPreferences(enabled:bool) : void
+    {static} VSCodeExists(curPath:string) : bool
+    {static} WriteWorkspaceSettings() : void
+}
+class VSCodeAssetPostprocessor {
+    - {static} OnGeneratedCSProjectFiles() : void
+}
+AssetPostprocessor <|-- VSCodeAssetPostprocessor
+@enduml

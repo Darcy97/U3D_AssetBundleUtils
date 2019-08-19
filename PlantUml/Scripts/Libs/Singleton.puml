@@ -1,0 +1,8 @@
+@startuml
+class "Singleton`1"<T> <<static>> {
+    - {static} <<volatile>> _instance : T
+    - {static} <<readonly>> _locker : object
+    + {static} Instance : T <<get>>
+    {static} Singleton()
+}
+@enduml

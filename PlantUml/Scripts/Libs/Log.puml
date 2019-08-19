@@ -1,0 +1,8 @@
+@startuml
+class Log {
+    + {static} Print(message:string, details:string) : void
+    + {static} Print(messageObj:Object, details:string) : void
+    + {static} Error(message:string, details:string) : void
+    + {static} Error(messageObj:Object, details:string) : void
+}
+@enduml

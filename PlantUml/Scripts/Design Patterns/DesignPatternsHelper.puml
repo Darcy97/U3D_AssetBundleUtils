@@ -1,0 +1,4 @@
+@startuml
+class DesignPatternsHelper <<static>> {
+}
+@enduml

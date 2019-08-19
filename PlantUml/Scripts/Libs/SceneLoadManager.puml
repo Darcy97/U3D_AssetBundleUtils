@@ -1,0 +1,10 @@
+@startuml
+class SceneLoadManager {
+    + {static} Instance : SceneLoadManager <<get>>
+    - SceneLoadManager()
+    - _currentScene : string
+    + LoadScene(name:string) : void
+    + GetCurrentSceneName() : string
+}
+MonoBehaviour <|-- SceneLoadManager
+@enduml

@@ -3,16 +3,12 @@
  * @version: 0.0.0
  * @Author: Darcy
  * @Date: 2019-08-19 17:48:18
- * @LastEditTime: 2019-08-19 20:39:35
+ * @LastEditTime: 2019-08-19 20:53:21
  */
 using OperationListener;
 using UnityEngine;
 public class TestOperationListener : MonoBehaviour, IOperationObserverPurchase, IOperationObserverSpin
 {
-
-    private void Start() {
-        
-    }
 
     public void ObserverUpdatePurchase (OperationMessagePurchase message)
     {

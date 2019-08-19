@@ -3,7 +3,7 @@
  * @version: 0.0.0
  * @Author: Darcy
  * @Date: 2019-08-19 17:48:18
- * @LastEditTime: 2019-08-19 20:24:20
+ * @LastEditTime: 2019-08-19 20:38:39
  */
 using OperationListener;
 using UnityEngine;
@@ -11,7 +11,7 @@ public class TestOperationListener : MonoBehaviour, IOperationObserverPurchase, 
 {
 
     private void Start() {
-        // PlayerOperationListener.Instance.Init();
+        
     }
 
     public void ObserverUpdatePurchase (OperationMessagePurchase message)

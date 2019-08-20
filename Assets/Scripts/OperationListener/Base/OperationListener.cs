@@ -3,7 +3,7 @@
  * @version: 0.0.0
  * @Author: Darcy
  * @Date: 2019-08-19 19:31:02
- * @LastEditTime: 2019-08-20 14:51:58
+ * @LastEditTime: 2019-08-20 15:03:54
  */
 using System;
 using System.Collections;
@@ -56,13 +56,15 @@ namespace OperationListener
             if (!type1.Equals (OperationType.Default))
             {
                 observerItem = new ObserverItem (observer, type1);
-                observerItems.Add (observerItem);
+                if (!observerItems.Contains (observerItem))
+                    observerItems.Add (observerItem);
             }
 
             if (!type2.Equals (OperationType.Default))
             {
                 observerItem = new ObserverItem (observer, type2);
-                observerItems.Add (observerItem);
+                if (!observerItems.Contains (observerItem))
+                    observerItems.Add (observerItem);
             }
         }
 

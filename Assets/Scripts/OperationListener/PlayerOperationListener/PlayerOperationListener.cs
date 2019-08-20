@@ -3,7 +3,7 @@
  * @version: 0.0.0
  * @Author: Darcy
  * @Date: 2019-08-19 19:31:21
- * @LastEditTime: 2019-08-19 20:24:06
+ * @LastEditTime: 2019-08-20 14:42:59
  */
 using System;
 using System.Collections;
@@ -33,43 +33,45 @@ namespace OperationListener
 		#endregion
 		
 
-		protected override void NotifyObserver (OperationMessage message, IOperationObserver observer, OperationType opType)
+		protected override void NotifyObserver (OperationMessage message, IOperationObserver observer)
 		{
 			if (message == null)
 				return;
 			if (observer == null)
 				return;
 
-			switch (opType)
-			{
-				case OperationType.Purchase:
-					var obPurchase = observer as IOperationObserverPurchase;
-					obPurchase.ObserverUpdatePurchase (message as OperationMessagePurchase);
-					break;
-				case OperationType.Spin:
-					var obSpin = observer as IOperationObserverSpin;
-					obSpin.ObserverUpdateSpin (message as OperationMessageSpin);
-					break;
-			}
+			observer.ObserverUpdate(message);
+
+			// switch (opType)
+			// {
+			// 	case OperationType.Purchase:
+			// 		var obPurchase = observer as IOperationObserverPurchase;
+			// 		obPurchase.ObserverUpdatePurchase (message as OperationMessagePurchase);
+			// 		break;
+			// 	case OperationType.Spin:
+			// 		var obSpin = observer as IOperationObserverSpin;
+			// 		obSpin.ObserverUpdateSpin (message as OperationMessageSpin);
+			// 		break;
+			// }
 		}
 
-		protected override List<OperationType> ParseOperationTypeOfObserver (IOperationObserver observer)
-		{
-			if (observer == null)
-				return null;
+		// protected override List<OperationType> ParseOperationTypeOfObserver (IOperationObserver observer)
+		// {
+		// 	if (observer == null)
+		// 		return null;
 
-			List<OperationType> result = new List<OperationType> ();
+		// 	List<OperationType> result = new List<OperationType> ();
 
-			if (observer is IOperationObserverSpin)
-				result.Add (OperationType.Spin);
+		// 	if (observer is IOperationObserverSpin)
+		// 		result.Add (OperationType.Spin);
 
-			if (observer is IOperationObserverPurchase)
-				result.Add (OperationType.Purchase);
+		// 	if (observer is IOperationObserverPurchase)
+		// 		result.Add (OperationType.Purchase);
 
-			if (result == null)
-				Debug.LogError ("请添加对应类型判断");
+		// 	if (result == null)
+		// 		Debug.LogError ("请添加对应类型判断");
 
-			return result;
-		}
+		// 	return result;
+		// }
 	}
 }

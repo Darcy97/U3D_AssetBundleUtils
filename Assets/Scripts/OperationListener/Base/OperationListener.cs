@@ -3,7 +3,7 @@
  * @version: 0.0.0
  * @Author: Darcy
  * @Date: 2019-08-19 19:31:02
- * @LastEditTime: 2019-08-19 20:23:52
+ * @LastEditTime: 2019-08-20 14:51:58
  */
 using System;
 using System.Collections;
@@ -40,31 +40,47 @@ namespace OperationListener
         /// </summary>
         /// <param name="observer"></param>
         /// <param name="type"></param>
-        public void RegisterObserver (IOperationObserver observer, OperationType type = OperationType.Default)
+        public void RegisterObserver (IOperationObserver observer, OperationType type0, OperationType type1 = OperationType.Default, OperationType type2 = OperationType.Default)
         {
 
             if (observer == null)
                 return;
 
-            if (!type.Equals (OperationType.Default))
+            if (type0.Equals (OperationType.Default))
+                return;
+
+            var observerItem = new ObserverItem (observer, type0);
+            if (!observerItems.Contains (observerItem))
+                observerItems.Add (observerItem);
+
+            if (!type1.Equals (OperationType.Default))
             {
-                var observerItem = new ObserverItem (observer, type);
+                observerItem = new ObserverItem (observer, type1);
+                observerItems.Add (observerItem);
+            }
+
+            if (!type2.Equals (OperationType.Default))
+            {
+                observerItem = new ObserverItem (observer, type2);
+                observerItems.Add (observerItem);
+            }
+        }
+
+        public void RegisterObserver (IOperationObserver observer, List<OperationType> types)
+        {
+
+            if (observer == null)
+                return;
+
+            if (null == types)
+                return;
+
+            ObserverItem observerItem = null;
+            foreach (var type in types)
+            {
+                observerItem = new ObserverItem (observer, type);
                 if (!observerItems.Contains (observerItem))
                     observerItems.Add (observerItem);
-                return;
-            }
-            else
-            {
-                var types = ParseOperationTypeOfObserver (observer);
-                if (types == null)
-                    return;
-
-                foreach (var item in types)
-                {
-                    var observerItem = new ObserverItem (observer, item);
-                    if (!observerItems.Contains (observerItem))
-                        observerItems.Add (observerItem);
-                }
             }
         }
 
@@ -121,14 +137,14 @@ namespace OperationListener
             {
                 if (message.GetOperationType ().Equals (obItem.OpType))
                 {
-                    NotifyObserver (message, obItem.Observer, obItem.OpType);
+                    NotifyObserver (message, obItem.Observer);
                 }
 
             }
         }
 
-        protected abstract List<OperationType> ParseOperationTypeOfObserver (IOperationObserver observer);
-        protected abstract void NotifyObserver (OperationMessage message, IOperationObserver observer, OperationType opType);
+        // protected abstract List<OperationType> ParseOperationTypeOfObserver (IOperationObserver observer);
+        protected abstract void NotifyObserver (OperationMessage message, IOperationObserver observer);
 
         #endregion
 
